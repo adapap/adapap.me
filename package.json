@@ -1,0 +1,17 @@
+{
+    "name": "adapap.me",
+    "version": "0.0.0",
+    "license": "MIT",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "dependencies": {
+        "vue": "^3.0.0-rc.1"
+    },
+    "devDependencies": {
+        "@vue/compiler-sfc": "^3.0.0-rc.1",
+        "pug": "^3.0.0",
+        "vite": "^1.0.0-rc.1"
+    }
+}
