@@ -1,0 +1,34 @@
+{
+  "extends": "stylelint-config-sass-guidelines",
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "tailwind",
+          "import",
+          "apply",
+          "responsive",
+          "variants",
+          "screen"
+        ]
+      }
+    ],
+    "block-opening-brace-space-before": null,
+    "color-hex-case": "upper",
+    "color-hex-length": "long",
+    "color-named": null,
+    "declaration-block-trailing-semicolon": "never",
+    "max-nesting-depth": null,
+    "order/order": [
+      "at-variables",
+      "custom-properties",
+      "dollar-variables",
+      "declarations",
+      "rules",
+      "at-rules"
+    ],
+    "selector-max-id": 1
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "adapap.me",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.0.0-rc.1",
+    "autoprefixer": "^9.8.6",
+    "postcss": "^8.1.4",
+    "postcss-sass": "^0.4.4",
+    "pug": "^3.0.0",
+    "sass": "^1.27.0",
+    "stylelint": "^13.7.2",
+    "stylelint-config-sass-guidelines": "^7.1.0",
+    "stylelint-order": "^4.1.0",
+    "tailwind": "^4.0.0",
+    "tailwindcss": "^1.9.6",
+    "vite": "^1.0.0-rc.6"
+  }
+}
