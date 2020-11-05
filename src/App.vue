@@ -1,17 +1,19 @@
 <template lang="pug">
 Header
-.text-primary Insert content here
+router-view
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
 
-import { defineComponent } from 'vue'
+const AsyncHeader = defineAsyncComponent(() =>
+  import('@/components/Header.vue')
+)
 
 export default defineComponent({
   name: 'App',
   components: {
-    Header,
+    Header: AsyncHeader,
   },
 })
 </script>

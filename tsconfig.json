@@ -7,7 +7,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "incremental": true,
-    "lib": ["DOM", "ESNext"],
+    "lib": ["DOM", "ESNext", "ES6"],
     "module": "ESNext",
     "moduleResolution": "node",
     "noImplicitAny": false,

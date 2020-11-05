@@ -1,10 +1,10 @@
 <template lang="pug">
 #header.flex.items-center.justify-between
-  #logo.text-brand.p-4 ADAPAP.ME
+  router-link#logo.text-brand.p-4(to='/') ADAPAP.ME
   #links.flex.justify-end.items-center
-    .link: span Resume
-    .link: span Blog
-    .link: span Portfolio
+    router-link.link(to='/resume'): span Resume
+    router-link.link(to='/blog'): span Blog
+    router-link.link(to='/portfolio'): span Portfolio
 </template>
 
 <script lang="ts">
