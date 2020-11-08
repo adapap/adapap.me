@@ -55,9 +55,12 @@ export default defineComponent({
   cursor: pointer
   margin-bottom: 1rem
   margin-right: 0.5rem
+  max-width: 480px
+  min-width: 320px
+  overflow: hidden
   text-decoration: none
   transition: 0.2s ease-in-out
-  width: 480px
+  width: 30vw
 
   &:hover
     background: darken($primary-light, 4%)

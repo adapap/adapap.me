@@ -6,3 +6,8 @@ export type BlogPost = {
   tags: string[]
   title: string
 }
+
+export enum EditorMode {
+  NEW_POST = 'NEW_POST',
+  UPDATE_POST = 'UPDATE_POST',
+}

@@ -1,0 +1,26 @@
+@import './base.sass'
+
+.transition-fast
+  transition: 0.2s ease-in-out
+
+.btn
+  background: $secondary
+  color: white
+  cursor: pointer
+  @extend .transition-fast
+  @apply py-2 px-4 rounded-sm
+
+  &:hover
+    background: darken($secondary, 5%)
+
+  &:active
+    background: darken($secondary, 10%)
+
+.input-label
+  @extend .text-primary
+  @apply block font-bold text-lg
+
+.text-input
+  &:focus
+    outline: none
+  @apply appearance-none border rounded w-full py-2 px-3 my-2 leading-tight
