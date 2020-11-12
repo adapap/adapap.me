@@ -45,7 +45,7 @@ export default defineComponent({
 </script>
 
 <style lang="sass" scoped>
-@import '../styles/base.sass'
+@import '../styles/ui.sass'
 
 .blog-post-card
   background: $primary-light
@@ -58,7 +58,7 @@ export default defineComponent({
   overflow: hidden
   text-decoration: none
   transition: 0.2s ease-in-out
-  width: 30vw
+  width: 25vw
 
   &:hover
     background: darken($primary-light, 4%)
@@ -66,7 +66,7 @@ export default defineComponent({
   .blog-post-image-default
     background: rgb(94, 0, 138)
     background: linear-gradient(24deg, rgba(94, 0, 138, 1) 0%, rgba(118, 6, 187, 1) 32%, rgba(197, 64, 236, 1) 100%)
-    height: 320px
+    height: 240px
     width: 480px
 
   .blog-post-likes

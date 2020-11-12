@@ -4,6 +4,7 @@ router-view
 </template>
 
 <script>
+import { useFirebase } from '@/api/api'
 import { defineAsyncComponent, defineComponent } from 'vue'
 
 const AsyncHeader = defineAsyncComponent(() =>
@@ -23,7 +24,7 @@ export default defineComponent({
 @tailwind components
 @tailwind utilities
 
-@import './styles/base.sass'
+@import './styles/ui.sass'
 #app
   background: $primary
   min-height: 100vh

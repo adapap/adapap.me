@@ -1,5 +1,5 @@
 <template lang="pug">
-.editor-header.flex.justify-center.py-4
+.editor-header.flex.justify-center.py-2
   .text-primary.text-5xl Post Editor
 form.editor-options.flex.flex-col
   label.input-label(for='post-title') Title
@@ -15,19 +15,18 @@ form.editor-options.flex.flex-col
       placeholder='Dev, Tech, Life...'
       @keydown.enter='addTag')
     .post-tags.flex.ml-1
-      .post-tag.ml-1.flex.items-center.cursor-pointer(v-for='tagName in post.tags' @click='removeTag(tagName)')
+      .post-tag.flex.items-center.ml-1.cursor-pointer(v-for='tagName in post.tags' @click='removeTag(tagName)')
+        .tag-name.text-primary {{ tagName }}
         i.material-icons close
-        .text-primary.ml-1 {{ tagName }}
   .text-primary.text-xl Content
   .editor(ref='editor' :modelValue='post.content')
   .editor-btn.mt-2.btn.text-center.text-xl(v-if='isNewPost' @click='createPost(post)') Publish
   .editor-btn.mt-2.btn.text-center.text-xl(v-else @click='updatePost(post)') Update
-  .editor-btn.mt-2.btn-error.text-center.text-xl(v-if='isNewPost' @click='deletePost(post)') Delete
+  .editor-btn.mt-2.btn-error.text-center.text-xl(v-if='!isNewPost' @click='deletePost(post)') Delete
 </template>
 
 <script lang="ts">
-import { useBlogPosts } from '@/composables/useBlogPosts'
-import { BlogPost, EditorMode } from '@/scripts/BlogPost'
+import { BlogPost, EditorMode, useBlogPosts } from '@/composables/BlogPosts'
 
 import '@toast-ui/editor/dist/toastui-editor.css'
 import 'codemirror/lib/codemirror.css'
@@ -41,7 +40,7 @@ export default defineComponent({
   name: 'BlogEditor',
   props: {
     editorMode: {
-      type: String,
+      type: Number,
       default: EditorMode.NEW_POST,
       validator: (v: string) => v in EditorMode,
     },
@@ -60,6 +59,7 @@ export default defineComponent({
       tags: new Set(),
       title: '',
     } as BlogPost)
+
     onMounted(() => {
       const e = new Editor({
         el: editor.value,
@@ -103,8 +103,10 @@ export default defineComponent({
 @import '../styles/ui.sass'
 
 .editor-options
-  margin: 0 auto
-  max-width: 80vw
+  height: 100%
+  margin: auto
+  max-width: 50vw
+  padding-bottom: 2rem
 
   .editor
     margin-top: 1rem
@@ -113,22 +115,20 @@ export default defineComponent({
     width: 120px
 
   .post-option
-    width: 30%
+    width: 50%
 
   .post-tags
     color: gray
 
     .post-tag
       border: 1px solid $primary-light
-      border-radius: 25px
+      border-radius: 10px
+      font-size: 1rem
       padding: 0.2rem 0.3rem
       @extend .transition-fast
       &:hover
         background: lighten($primary, 10%)
 
-      i
-        font-size: 1rem
-
   .post-tag-input
-    width: 15%
+    width: 30%
 </style>

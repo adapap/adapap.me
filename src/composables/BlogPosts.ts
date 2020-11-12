@@ -12,8 +12,8 @@ export type BlogPost = {
 }
 
 export enum EditorMode {
-  NEW_POST = 'NEW_POST',
-  UPDATE_POST = 'UPDATE_POST',
+  NEW_POST,
+  UPDATE_POST,
 }
 
 export function useBlogPosts() {
@@ -33,7 +33,7 @@ export function useBlogPosts() {
       author: 'not me',
       created: dayjs(12345),
       likes: 0,
-      tags: new Set('Life'),
+      tags: new Set(['Life']),
       title: 'An old post!',
       postId: '4231',
     },
