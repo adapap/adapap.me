@@ -14,20 +14,18 @@
 </template>
 
 <script lang="ts">
-import { useBlogPosts } from '@/composables/useBlogPosts'
-import { BlogPost } from '@/scripts/BlogPost'
-
-import { defineComponent } from 'vue'
+import { BlogPost, useBlogPosts } from '@/composables/BlogPosts'
+import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   name: 'BlogPostCard',
   props: {
     post: {
-      type: Object as () => BlogPost,
+      type: Object as PropType<BlogPost>,
       required: true,
     },
   },
-  setup() {
+  setup(props) {
     const { formatPostCreated } = useBlogPosts()
     return {
       formatPostCreated,
@@ -55,9 +53,12 @@ export default defineComponent({
   cursor: pointer
   margin-bottom: 1rem
   margin-right: 0.5rem
+  max-width: 480px
+  min-width: 320px
+  overflow: hidden
   text-decoration: none
   transition: 0.2s ease-in-out
-  width: 480px
+  width: 30vw
 
   &:hover
     background: darken($primary-light, 4%)
