@@ -3,18 +3,24 @@
 .transition-fast
   transition: 0.2s ease-in-out
 
+@mixin btn-states($color)
+  background: $color
+  &:hover
+    background: darken($color, 5%)
+
+  &:active
+    background: darken($color, 10%)
+
 .btn
-  background: $secondary
   color: white
   cursor: pointer
+  +btn-states($secondary)
   @extend .transition-fast
   @apply py-2 px-4 rounded-sm
 
-  &:hover
-    background: darken($secondary, 5%)
-
-  &:active
-    background: darken($secondary, 10%)
+.btn-error
+  +btn-states($error)
+  @extend .btn
 
 .input-label
   @extend .text-primary

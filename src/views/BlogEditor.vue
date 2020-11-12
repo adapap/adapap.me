@@ -8,24 +8,34 @@ form.editor-options.flex.flex-col
     placeholder='Title'
     :modelValue='post.title')
   label.input-label(for='post-tags') Tags
-  input#post-tags.post-option.text-input(
-    type='text'
-    placeholder='Dev, Tech, Life...'
-    :modelValue='post.title')
+  #post-tags.flex.items-center
+    input.post-tag-input.post-option.text-input(
+      v-model='tag'
+      type='text'
+      placeholder='Dev, Tech, Life...'
+      @keydown.enter='addTag')
+    .post-tags.flex.ml-1
+      .post-tag.ml-1.flex.items-center.cursor-pointer(v-for='tagName in post.tags' @click='removeTag(tagName)')
+        i.material-icons close
+        .text-primary.ml-1 {{ tagName }}
   .text-primary.text-xl Content
   .editor(ref='editor' :modelValue='post.content')
-  .editor-submit.mt-2.btn.text-center.text-xl(@click='updatePost') Publish
+  .editor-btn.mt-2.btn.text-center.text-xl(v-if='isNewPost' @click='createPost(post)') Publish
+  .editor-btn.mt-2.btn.text-center.text-xl(v-else @click='updatePost(post)') Update
+  .editor-btn.mt-2.btn-error.text-center.text-xl(v-if='isNewPost' @click='deletePost(post)') Delete
 </template>
 
 <script lang="ts">
-import { EditorMode } from '@/scripts/BlogPost'
+import { useBlogPosts } from '@/composables/useBlogPosts'
+import { BlogPost, EditorMode } from '@/scripts/BlogPost'
 
 import '@toast-ui/editor/dist/toastui-editor.css'
 import 'codemirror/lib/codemirror.css'
 // import 'highlight.js/styles/github.css'
 
+import dayjs from 'dayjs'
 import Editor from '@toast-ui/editor'
-import { defineComponent, onMounted, reactive, ref } from 'vue'
+import { computed, defineComponent, onMounted, reactive, ref } from 'vue'
 
 export default defineComponent({
   name: 'BlogEditor',
@@ -35,15 +45,21 @@ export default defineComponent({
       default: EditorMode.NEW_POST,
       validator: (v: string) => v in EditorMode,
     },
+    // post: {
+    //   type: Object as () => BlogPost,
+    // }
   },
   setup(props) {
     const editor = ref()
+    const tag = ref('')
     const post = reactive({
-      title: '',
-      created: new Date(),
       author: '',
       content: '',
-    })
+      created: dayjs(),
+      postId: '',
+      tags: new Set(),
+      title: '',
+    } as BlogPost)
     onMounted(() => {
       const e = new Editor({
         el: editor.value,
@@ -59,20 +75,25 @@ export default defineComponent({
       })
     })
 
-    const updatePost = () => {
-      switch (props.editorMode) {
-        case EditorMode.NEW_POST:
-          console.log('[To Do] Creating new post:', post.content)
-          break
-        case EditorMode.UPDATE_POST:
-          console.log('[To Do] Updating post:', post.content)
-          break
-      }
+    const addTag = () => {
+      post.tags.add(tag.value)
+      tag.value = ''
     }
+
+    const removeTag = (tagName: string) => {
+      post.tags.delete(tagName)
+    }
+
+    const isNewPost = computed(() => props.editorMode === EditorMode.NEW_POST)
+
     return {
+      ...useBlogPosts(),
+      addTag,
       editor,
+      isNewPost,
       post,
-      updatePost,
+      removeTag,
+      tag,
     }
   },
 })
@@ -88,9 +109,26 @@ export default defineComponent({
   .editor
     margin-top: 1rem
 
-  .editor-submit
+  .editor-btn
     width: 120px
 
   .post-option
     width: 30%
+
+  .post-tags
+    color: gray
+
+    .post-tag
+      border: 1px solid $primary-light
+      border-radius: 25px
+      padding: 0.2rem 0.3rem
+      @extend .transition-fast
+      &:hover
+        background: lighten($primary, 10%)
+
+      i
+        font-size: 1rem
+
+  .post-tag-input
+    width: 15%
 </style>

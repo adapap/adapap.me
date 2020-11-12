@@ -1,9 +1,12 @@
+import { Dayjs as Timestamp } from 'dayjs'
+
 export type BlogPost = {
   author: string
-  created: Date
+  content?: string
+  created: Timestamp
   postId: string
-  likes: number
-  tags: string[]
+  likes?: number
+  tags: Set<string>
   title: string
 }
 
