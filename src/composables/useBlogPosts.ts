@@ -1,7 +1,14 @@
-import { BlogPost } from '@/scripts/BlogPost'
-
 import dayjs from 'dayjs'
 import { readonly, ref } from 'vue'
+
+export type BlogPost = {
+  author: string
+  created: Date
+  postId: string
+  likes: number
+  tags: string[]
+  title: string
+}
 
 export function useBlogPosts() {
   const posts = ref(Array<BlogPost>())
