@@ -1,21 +1,25 @@
 <template lang="pug">
 .blog-post-card(@click='loadPost')
-  .blog-post-meta.p-2
-    .blog-post-title.text-primary.truncate {{ post.title }}
-    .blog-post-created.text-secondary {{ post.author }} · {{ formatPostCreated(post) }}
+  .blog-post-meta.p-2.flex.items-center
+    //- img.blog-post-avatar(:src='avatar' width='48px' height='48px')
+    .blog-post-desc
+      .blog-post-title.text-primary.truncate {{ post.title }}
+      .blog-post-created.text-secondary {{ post.author }} · {{ formatPostCreated(post) }}
   img(v-if='post.image' :src='post.image')
   .blog-post-image-default(v-else)
   .blog-post-footer.flex.justify-between.items-center.p-2
     .blog-post-tags.flex.flex-wrap
       .blog-post-tag.mx-1.p-1.text-primary(v-for='tag in post.tags') {{ tag }}
-    .blog-post-likes.flex
+    .blog-post-likes.flex.items-center
       i.material-icons favorite
       .text-secondary.ml-1 {{ post.likes }}
 </template>
 
 <script lang="ts">
 import { BlogPost, useBlogPosts } from '@/composables/BlogPosts'
-import { defineComponent, PropType } from 'vue'
+
+import { defineComponent, PropType, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'BlogPostCard',
@@ -27,8 +31,13 @@ export default defineComponent({
   },
   setup(props) {
     const { formatPostCreated } = useBlogPosts()
+    const router = useRouter()
+    // const avatar = ref('/default/avatar.jpg')
+
     return {
+      // avatar,
       formatPostCreated,
+      router,
     }
   },
   computed: {
@@ -38,7 +47,7 @@ export default defineComponent({
   },
   methods: {
     loadPost(): void {
-      this.$router.push(this.slug)
+      this.router.push(this.slug)
     },
   },
 })
@@ -62,6 +71,11 @@ export default defineComponent({
 
   &:hover
     background: darken($primary-light, 4%)
+
+  .blog-post-avatar
+    border-radius: 50%
+    height: 48px
+    width: 48px
 
   .blog-post-image-default
     background: rgb(94, 0, 138)

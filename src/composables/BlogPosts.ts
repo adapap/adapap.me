@@ -2,7 +2,7 @@ import { API } from '@/api/API'
 // import { useUserAuth } from '@/composables/UserAuth'
 
 import dayjs from 'dayjs'
-import { readonly, ref } from 'vue'
+import { reactive, readonly, ref } from 'vue'
 
 export type BlogPost = {
   author: string
@@ -23,6 +23,7 @@ export enum EditorMode {
 export function useBlogPosts() {
   const posts = ref(Array<BlogPost>())
   // const cursor = ref()
+  const authors = reactive({})
 
   // API
   const createPost = async (post: BlogPost) => {
@@ -31,7 +32,11 @@ export function useBlogPosts() {
 
   const fetchPosts = async () => {
     posts.value = posts.value.concat(await API.FETCH_POSTS())
-    console.log('Posts:', posts.value)
+    // for (const p of posts.value) {
+    //   if (!(p.author in authors)) {
+    //     authors[p.author] = await API.GET_AUTHOR(p.author)
+    //   }
+    // }
   }
 
   const loadPost = async (id: string): Promise<BlogPost | undefined> => {
