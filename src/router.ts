@@ -2,9 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Blog from '@/views/Blog.vue'
 import BlogEditor from '@/views/BlogEditor.vue'
+import BlogPostReader from '@/components/BlogPostReader.vue'
 import BlogProfile from '@/views/BlogProfile.vue'
 import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
+import Portfolio from '@/views/Portfolio.vue'
+import Resume from '@/views/Resume.vue'
 
 const blogRoutes = [
   {
@@ -16,6 +19,11 @@ const blogRoutes = [
     component: BlogEditor,
     name: 'blog-editor',
     path: '/blog/editor',
+  },
+  {
+    component: BlogPostReader,
+    name: 'blog-post-reader',
+    path: '/blog/post/:id',
   },
   {
     component: BlogProfile,
@@ -35,6 +43,16 @@ const routes = [
     component: Login,
     name: 'login',
     path: '/login',
+  },
+  {
+    component: Portfolio,
+    name: 'portfolio',
+    path: '/portfolio',
+  },
+  {
+    component: Resume,
+    name: 'resume',
+    path: '/resume',
   },
 ]
 

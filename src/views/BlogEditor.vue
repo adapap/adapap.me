@@ -4,9 +4,9 @@
 form.editor-options.flex.flex-col
   label.input-label(for='post-title') Title
   input#post-title.post-option.text-input(
+    v-model='post.title'
     type='text'
-    placeholder='Title'
-    :modelValue='post.title')
+    placeholder='Title')
   label.input-label(for='post-tags') Tags
   #post-tags.flex.items-center
     input.post-tag-input.post-option.text-input(
@@ -34,7 +34,14 @@ import 'codemirror/lib/codemirror.css'
 
 import dayjs from 'dayjs'
 import Editor from '@toast-ui/editor'
-import { computed, defineComponent, onMounted, reactive, ref } from 'vue'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  PropType,
+  reactive,
+  ref,
+} from 'vue'
 
 export default defineComponent({
   name: 'BlogEditor',
@@ -44,22 +51,19 @@ export default defineComponent({
       default: EditorMode.NEW_POST,
       validator: (v: string) => v in EditorMode,
     },
-    // post: {
-    //   type: Object as () => BlogPost,
-    // }
+    post: {
+      type: Object as PropType<BlogPost>,
+    },
   },
   setup(props) {
     const editor = ref()
     const tag = ref('')
-    const post = reactive({
-      author: '',
+    const post = reactive(<BlogPost>{
       content: '',
-      created: dayjs(),
-      postId: '',
-      tags: new Set(),
+      likes: 0,
+      tags: Array(),
       title: '',
-    } as BlogPost)
-
+    })
     onMounted(() => {
       const e = new Editor({
         el: editor.value,
@@ -76,12 +80,14 @@ export default defineComponent({
     })
 
     const addTag = () => {
-      post.tags.add(tag.value)
-      tag.value = ''
+      if (post.tags.indexOf(tag.value) === -1) {
+        post.tags.push(tag.value)
+        tag.value = ''
+      }
     }
 
     const removeTag = (tagName: string) => {
-      post.tags.delete(tagName)
+      post.tags.splice(post.tags.indexOf(tagName), 1)
     }
 
     const isNewPost = computed(() => props.editorMode === EditorMode.NEW_POST)

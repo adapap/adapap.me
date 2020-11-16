@@ -4,7 +4,6 @@ router-view
 </template>
 
 <script>
-import { useFirebase } from '@/api/api'
 import { defineAsyncComponent, defineComponent } from 'vue'
 
 const AsyncHeader = defineAsyncComponent(() =>

@@ -1,14 +1,18 @@
-import dayjs, { Dayjs as Timestamp } from 'dayjs'
+import { API } from '@/api/API'
+// import { useUserAuth } from '@/composables/UserAuth'
+
+import dayjs from 'dayjs'
 import { readonly, ref } from 'vue'
 
 export type BlogPost = {
   author: string
-  content?: string
-  created: Timestamp
-  postId: string
-  likes?: number
-  tags: Set<string>
+  content: string
+  created: number
+  id: string
+  likes: number
+  tags: string[]
   title: string
+  updated?: number
 }
 
 export enum EditorMode {
@@ -18,56 +22,41 @@ export enum EditorMode {
 
 export function useBlogPosts() {
   const posts = ref(Array<BlogPost>())
+  // const cursor = ref()
 
-  // Replace with API call to get latest data
-  posts.value = [
-    {
-      author: 'adam',
-      created: dayjs(),
-      likes: 0,
-      tags: new Set(),
-      title: 'My First Blog Post',
-      postId: '1234',
-    },
-    {
-      author: 'not me',
-      created: dayjs(12345),
-      likes: 0,
-      tags: new Set(['Life']),
-      title: 'An old post!',
-      postId: '4231',
-    },
-    {
-      author: '0123456789012345',
-      created: dayjs(999),
-      likes: 420,
-      tags: new Set(['Dev', 'Education']),
-      title:
-        'breaking the meta: an in depth guide into how to define a long title that overflows',
-      postId: '777',
-    },
-  ]
-
-  const formatPostCreated = (post: BlogPost): string => {
-    return dayjs(post.created).format('MMM DD, YYYY')
+  // API
+  const createPost = async (post: BlogPost) => {
+    await API.CREATE_POST(post)
   }
 
-  const createPost = (post: BlogPost) => {
-    console.log('[To Do/API] Creating new post:', post)
+  const fetchPosts = async () => {
+    posts.value = posts.value.concat(await API.FETCH_POSTS())
+    console.log('Posts:', posts.value)
   }
 
-  const updatePost = (post: BlogPost) => {
+  const loadPost = async (id: string): Promise<BlogPost | undefined> => {
+    return API.LOAD_POST(id)
+  }
+
+  const updatePost = async (post: BlogPost) => {
     console.log('[To Do/API] Updating post:', post)
   }
 
-  const deletePost = (post: BlogPost) => {
+  const deletePost = async (post: BlogPost) => {
     console.log('[To Do/API] Deleting post:', post)
+  }
+
+  // Utility
+  const formatPostCreated = (post: BlogPost): string => {
+    return dayjs.unix(post.created).format('MMM DD, YYYY')
   }
 
   return {
     createPost,
     deletePost,
+    fetchPosts,
     formatPostCreated,
+    loadPost,
     posts: readonly(posts),
     updatePost,
   }

@@ -17,7 +17,7 @@ import BlogPostCard from '@/components/BlogPostCard.vue'
 import { useBlogPosts } from '@/composables/BlogPosts'
 import { useUserAuth } from '@/composables/UserAuth'
 
-import { defineComponent } from 'vue'
+import { defineComponent, onBeforeMount } from 'vue'
 
 export default defineComponent({
   name: 'Blog',
@@ -26,8 +26,14 @@ export default defineComponent({
   },
   setup() {
     const { user } = useUserAuth()
+
+    const { fetchPosts, posts } = useBlogPosts()
+    onBeforeMount(async () => {
+      await fetchPosts()
+    })
+
     return {
-      ...useBlogPosts(),
+      posts,
       user,
     }
   },

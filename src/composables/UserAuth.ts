@@ -1,9 +1,9 @@
-import { useFirebase, User, UserProfile } from '@/api/api'
+import { useFirebase, User, UserProfile } from '@/api/API'
 
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
-const { db, auth } = useFirebase()
+const { auth } = useFirebase()
 
 const user = ref(null as User)
 const isLoggedIn = ref(false)

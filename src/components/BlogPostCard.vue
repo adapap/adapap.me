@@ -33,7 +33,7 @@ export default defineComponent({
   },
   computed: {
     slug(): string {
-      return `/blog/post/${this.post.postId}`
+      return `/blog/post/${this.post.id}`
     },
   },
   methods: {
